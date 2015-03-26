@@ -1,15 +1,16 @@
 package com.kmangutov.restexample.views;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.kmangutov.restexample.R;
 import com.kmangutov.restexample.adapters.PostsAdapter;
 import com.kmangutov.restexample.models.Post;
+import com.kmangutov.restexample.presenters.DetailPresenter;
 import com.kmangutov.restexample.presenters.ListPresenter;
 import com.kmangutov.restexample.services.ForumService;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnItemClick;
 
 
 public class ListActivity extends ActionBarActivity {
@@ -44,6 +46,17 @@ public class ListActivity extends ActionBarActivity {
         mForumService = new ForumService();
         mListPresenter = new ListPresenter(this, mForumService);
         mListPresenter.loadPosts();
+    }
+
+    @OnItemClick(R.id.listViewPosts)
+    public void onPostSelect(int position) {
+
+        Post p = mPostsAdapter.getItem(position);
+        int postId = p.id;
+
+        Intent detailIntent = new Intent(this, DetailActivity.class);
+        detailIntent.putExtra("postId", postId);
+        startActivity(detailIntent);
     }
 
     public void displayPosts(List<Post> posts) {

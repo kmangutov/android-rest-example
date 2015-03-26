@@ -9,6 +9,7 @@ import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import rx.Observable;
 
 /**
@@ -48,8 +49,11 @@ public class ForumService {
         @GET("/posts")
         public Observable<List<Post>> getPosts();
 
-        @GET("/comments?postId={id}")
+        @GET("/posts/{id}")
+        public Observable<Post> getPost(@Path("id") int postId);
+
+        @GET("/comments")
         public Observable<List<Comment>>
-            getComments(@Path("id") int postId);
+            getComments(@Query("postId") int postId);
     }
 }
