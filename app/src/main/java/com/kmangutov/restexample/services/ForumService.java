@@ -8,6 +8,7 @@ import java.util.List;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
@@ -47,13 +48,19 @@ public class ForumService {
     public interface ForumApi {
 
         @GET("/posts")
-        public Observable<List<Post>> getPosts();
+        public Observable<List<Post>>
+            getPosts();
 
         @GET("/posts/{id}")
-        public Observable<Post> getPost(@Path("id") int postId);
+        public Observable<Post>
+            getPost(@Path("id") int postId);
 
         @GET("/comments")
         public Observable<List<Comment>>
             getComments(@Query("postId") int postId);
+
+        @POST("/posts")
+        public Observable<Post>
+            postPost(Post post);
     }
 }
